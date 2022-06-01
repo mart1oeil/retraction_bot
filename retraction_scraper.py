@@ -1,4 +1,3 @@
-from inspect import classify_class_attrs
 import requests
 import re
 from bs4 import BeautifulSoup
