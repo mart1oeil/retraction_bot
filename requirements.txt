@@ -1,0 +1,4 @@
+tweepy
+requests 
+bs4
+inspect
