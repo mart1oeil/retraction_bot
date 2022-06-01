@@ -2,13 +2,23 @@ import tweepy
 import datetime
 import calendar
 import retraction_scraper
-from credentials import *
+import configargparse  as cap
 
+argparser = cap.ArgParser(default_config_files=['keys.yml'])
+argparser.add('-c', is_config_file=True, help='config file path')
+argparser.add('--api', env_var='BOT_API')
+argparser.add('--api-secret', env_var='BOT_API_SECRET')
+argparser.add('--access', env_var='BOT_ACCESS')
+argparser.add('--access-secret', env_var='BOT_ACCESS_SECRET')
+
+
+
+args = argparser.parse_args()
 
 
 client = tweepy.Client(
-    consumer_key=API_KEY, consumer_secret=API_SECRET,
-    access_token=ACCESS_TOKEN, access_token_secret=ACCESS_TOKEN_SECRET
+    consumer_key=args.api, consumer_secret=args.api_secret,
+    access_token=args.access, access_token_secret=args.access_secret
 )
 
 # Create Tweet 
