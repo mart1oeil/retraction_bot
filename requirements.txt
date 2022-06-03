@@ -2,4 +2,3 @@ tweepy
 requests 
 bs4
 configargparse
-os
