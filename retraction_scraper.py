@@ -42,7 +42,7 @@ def  scraper(country="France",from_date="",to_date=""):
         formdata["txtToDate"] = to_date
 
     resp = s.post(url, data=formdata,headers=headers)
-    soupResult = BeautifulSoup(resp.text, 'html5lib')
+    soupResult = BeautifulSoup(resp.text, 'html.parser')
     table = soupResult.find("table", id = "grdRetraction")
     scraped_rows=[]
     if table :
@@ -86,11 +86,11 @@ def  scraper(country="France",from_date="",to_date=""):
                     cell7 = str(cells[7]).split('<br/>')
                     countries = []
                     for country in cell7[0:-1]:
-                        country = BeautifulSoup(country,'html5lib').text.strip()
+                        country = BeautifulSoup(country,'html.parser').text.strip()
                         countries.append(country)
                     scraped_row["countries"] = countries
                     paywalled = cell7[-1]
-                    scraped_row ["paywalled"] = BeautifulSoup(paywalled,'html5lib').text.strip()
+                    scraped_row ["paywalled"] = BeautifulSoup(paywalled,'html.parser').text.strip()
                 scraped_rows.append(scraped_row)
     return scraped_rows
 
