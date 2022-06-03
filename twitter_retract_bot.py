@@ -63,7 +63,7 @@ to_date = "{:02d}".format(today.month)+"/"+"{:02d}".format(today.day)+"/"+str(to
 retraction_text = "Article retracté : "
 concern_text = "Mise en garde de l'éditeur : "
 
-scraped = retraction_scraper.scraper(country="France",from_date=from_date,to_date=to_date)
+scraped = retraction_scraper.scraper(country="United States",from_date=from_date,to_date=to_date)
 resp = get_last_tweet()
 for row in scraped :
     doi = "http://dx.doi.org/"+row["original_doi"]
