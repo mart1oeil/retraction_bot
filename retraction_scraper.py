@@ -24,7 +24,7 @@ headers={"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
         }
 
-def  scraper(country="France",from_date="",to_date=""):
+def  scraper(country="United States",from_date="",to_date=""):
     """
     This fonction scrap the retraction database
     parameters :
