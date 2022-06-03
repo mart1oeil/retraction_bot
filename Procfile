@@ -1,1 +1,1 @@
-worker: twitter_retract_bot.py
+worker: python twitter_retract_bot.py
