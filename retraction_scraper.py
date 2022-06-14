@@ -42,7 +42,7 @@ def  scraper(country="France",from_date="",to_date=""):
     if to_date:
         formdata["txtToDate"] = to_date
     resp = s.post(url, data=formdata,headers=headers)
-    soupResult = BeautifulSoup(resp.text, 'html5lib')
+    soupResult = BeautifulSoup(resp.text, 'html.parser')
     table = soupResult.find("table", id = "grdRetraction")
     scraped_rows=[]
     if table :
