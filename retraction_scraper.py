@@ -1,3 +1,4 @@
+from stat import FILE_ATTRIBUTE_TEMPORARY
 import requests
 import re
 from bs4 import BeautifulSoup
@@ -24,7 +25,7 @@ headers={"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
         }
 
-def  scraper(country="United States",from_date="",to_date=""):
+def  scraper(country="France",from_date="",to_date=""):
     """
     This fonction scrap the retraction database
     parameters :
@@ -40,9 +41,8 @@ def  scraper(country="United States",from_date="",to_date=""):
         formdata["txtFromDate"] = from_date
     if to_date:
         formdata["txtToDate"] = to_date
-
     resp = s.post(url, data=formdata,headers=headers)
-    soupResult = BeautifulSoup(resp.text, 'html.parser')
+    soupResult = BeautifulSoup(resp.text, 'html5lib')
     table = soupResult.find("table", id = "grdRetraction")
     scraped_rows=[]
     if table :
@@ -52,6 +52,7 @@ def  scraper(country="United States",from_date="",to_date=""):
             for row in rows[1:]:
                 scraped_row={}
                 scraped_row["title"] = row.find('span',attrs = {'class':'rTitle'}).get_text()
+                print(scraped_row["title"])
                 journal = row.find_all('span',attrs = {'class':'rJournal'})
                 if len(journal) > 0 :
                     journal = journal[1].get_text().strip(" ---")

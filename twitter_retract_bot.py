@@ -2,7 +2,7 @@ import tweepy
 import datetime
 import retraction_scraper
 import configargparse  as cap
-import os
+# import os
 
 def get_last_tweet():
     filepath = "data/last_tweet.txt"
@@ -45,6 +45,7 @@ client = tweepy.Client(
 
 
 today = datetime.date.today()
+today = datetime.date(2022, 6, 14)
 
 yesterday = today - datetime.timedelta(days=1)
 
@@ -58,13 +59,14 @@ year = today.year
 ##to_date = str(today.month)+"/"+str(today.day)+"/"+str(today.year)
 
 from_date = "{:02d}".format(yesterday.month)+"/"+"{:02d}".format(yesterday.day)+"/"+str(yesterday.year)
-to_date = "{:02d}".format(today.month)+"/"+"{:02d}".format(today.day)+"/"+str(today.year)
+## to_date = "{:02d}".format(today.month)+"/"+"{:02d}".format(today.day)+"/"+str(today.year)
 
 retraction_text = "Article retracté : "
 concern_text = "Mise en garde de l'éditeur : "
 
-scraped = retraction_scraper.scraper(country="United States",from_date=from_date,to_date=to_date)
-resp = get_last_tweet()
+scraped = retraction_scraper.scraper(country="France",from_date=from_date,to_date=from_date)
+#resp = get_last_tweet()
+resp = ""
 for row in scraped :
     doi = "http://dx.doi.org/"+row["original_doi"]
     authors_text = row["authors"][0]+" et al. "
@@ -89,12 +91,16 @@ for row in scraped :
             text = new_title+", de "+authors_text+" "
     text = text + doi
     if not resp or resp[1] is not "{:02d}".format(yesterday.month):
-        response = client.create_tweet(text=text)
+        try:
+            response = client.create_tweet(text=text)
+        except tweepy.errors.Forbidden:
+            print("403 forbidden, perhaps tweet already exists?")
+
     else :
         response = client.create_tweet(text=text,  in_reply_to_tweet_id=resp[0])
-    resp = response.data['id']
-if resp:
-    save_last_tweet_(resp,"{:02d}".format(yesterday.month))
+"""     resp = response.data['id']
+    if resp:
+        save_last_tweet_(resp,"{:02d}".format(yesterday.month)) """
 
 
 
